@@ -8,6 +8,7 @@ import {
   Image,
   LinkBox,
   LinkOverlay,
+  Tag,
   Text,
   VStack,
   Wrap,
@@ -20,7 +21,13 @@ function Post({ post }) {
   const reactionCount =
     post._count.hearts + post._count.unicorns + post._count.bookmarks;
   return (
-    <LinkBox w="full" bg={"gray.800"} as="article" rounded={["none"]}>
+    <LinkBox
+      w="full"
+      as="article"
+      rounded={["none"]}
+      borderWidth="1px"
+      borderRadius="lg"
+    >
       {post.poster && (
         <Image
           borderTopRadius={["none"]}
@@ -36,79 +43,79 @@ function Post({ post }) {
 
         <VStack spacing={0} align="flex-start">
           <NextLink href={`/${post.author.username}`} passHref>
-            <a>
-              <Text fontSize="md">{post.author.name}</Text>
-            </a>
+            <a>{post.author.name}</a>
           </NextLink>
 
-          <Text fontSize="sm">{post.publishedAt}</Text>
+          <Text fontSize="sm">{post.createdAt}</Text>
         </VStack>
       </HStack>
 
-      <NextLink href={`/${post.author.username}/${post.slug}`} passHref>
-        <LinkOverlay>
-          <Heading as="h3" size="lg" my="2" px={[2]}>
-            {post.title}
-          </Heading>
-        </LinkOverlay>
-      </NextLink>
+      <Box ml={[9]} px={[2]}>
+        <NextLink href={`/${post.author.username}/${post.slug}`} passHref>
+          <LinkOverlay>
+            <Heading as="h3" size="lg" my="2" px={[2]}>
+              {post.title}
+            </Heading>
+          </LinkOverlay>
+        </NextLink>
 
-      <Wrap pl={[0]} my={[3]} px={[2]}>
-        {post.tags.map((tag) => (
-          <NextLink href={`/t/${tag.slug}`} passHref key={tag.id}>
-            <a>
-              <Text fontSize="md">#{tag.name}</Text>
-            </a>
-          </NextLink>
-        ))}
-      </Wrap>
+        <Wrap pl={[0]} my={[3]} px={[2]}>
+          {post.tags.map((tag) => (
+            <NextLink href={`/tags/${tag.slug}`} passHref key={tag.id}>
+              <a>
+                <Tag size="sm">#{tag.name}</Tag>
+              </a>
+            </NextLink>
+          ))}
+        </Wrap>
 
-      <HStack pl={[0]} pr={[0]} py={[2]} px={[2]} justify="space-between">
-        <HStack>
-          <NextLink href={`/${post.author.username}/${post.slug}`} passHref>
-            <a>
-              <Button
-                size="sm"
-                variant="ghost"
-                leftIcon={<Icon as={RiHeart2Line} w={5} h={5} />}
-              >
-                {reactionCount}
-                <Box
-                  display={["none", "none", "block"]}
-                  ml={reactionCount ? 2 : 0}
+        <HStack pl={[0]} pr={[0]} py={[2]} px={[2]} justify="space-between">
+          <HStack>
+            <NextLink href={`/${post.author.username}/${post.slug}`} passHref>
+              <a>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  leftIcon={<Icon as={RiHeart2Line} w={5} h={5} />}
                 >
-                  reactions
-                </Box>
-              </Button>
-            </a>
-          </NextLink>
+                  {reactionCount ? reactionCount : null}
+                  <Box
+                    display={["none", "none", "block"]}
+                    ml={reactionCount ? 2 : 0}
+                  >
+                    reactions
+                  </Box>
+                </Button>
+              </a>
+            </NextLink>
 
-          <NextLink href={`/${post.author.username}/${post.slug}`} passHref>
-            <a>
-              <Button
-                size="sm"
-                variant="ghost"
-                leftIcon={<Icon as={RiChat1Line} w={5} h={5} />}
-              >
-                {post._count.comments}
-                <Box
-                  display={["none", "none", "block"]}
-                  ml={post._count.comments ? 2 : 0}
+            <NextLink href={`/${post.author.username}/${post.slug}`} passHref>
+              <a>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  leftIcon={<Icon as={RiChat1Line} w={5} h={5} />}
                 >
-                  Add a comment
-                </Box>
-              </Button>
-            </a>
-          </NextLink>
-        </HStack>
+                  {post._count.comments}
+                  <Box
+                    display={["none", "none", "block"]}
+                    ml={post._count.comments ? 2 : 0}
+                  >
+                    Add a comment
+                  </Box>
+                </Button>
+              </a>
+            </NextLink>
+          </HStack>
 
-        <HStack>
-          <Text fontSize="xs">{post.readTime} min read</Text>
-          <Button size="sm" variant="solid">
-            Save
-          </Button>
+          <HStack>
+            <Text fontSize="xs">{post.readTime} min read</Text>
+            <Button size="sm" variant="solid">
+              Save
+            </Button>
+          </HStack>
         </HStack>
-      </HStack>
+      </Box>
     </LinkBox>
   );
 }

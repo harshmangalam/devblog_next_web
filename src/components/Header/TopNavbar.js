@@ -1,44 +1,47 @@
 import {
-  Avatar,
   Box,
   Button,
+  Divider,
   HStack,
   Icon,
   IconButton,
   Input,
-  useTheme,
+  Skeleton,
+  SkeletonCircle,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import {
   RiChatSmile3Line,
   RiNotification3Line,
-  RiMenuFill,
   RiSearchLine,
 } from "react-icons/ri";
 import { FaDev } from "react-icons/fa";
-import React from "react";
+import { Fragment } from "react";
 import MobileDrawer from "./MobileDrawer";
+import ProfileMenu from "./ProfileMenu";
+import { useAuthState } from "../../context/AuthProvider";
 
-function TopNavbar(props) {
-  const theme = useTheme();
+function TopNavbar() {
+  const { isAuthenticated, userLoading, user } = useAuthState();
 
   return (
-    <Box
-      px={[1, null]}
-      py={2}
-      bg={theme.config.initialColorMode === "light" ? "white" : "rgb(26,38,52)"}
-      shadow="xs"
-    >
+    <Fragment>
       <Box
         m="auto"
         maxW={["container.xl"]}
         d="flex"
         alignItems="center"
         justifyContent="space-between"
+        height={["7vh", "7vh", "6vh"]}
       >
         <HStack>
           {/* logo  */}
           <MobileDrawer />
-          <Icon as={FaDev} h={10} w={10} />
+          <Link href="/" passHref>
+            <a>
+              <Icon as={FaDev} h={10} w={10} />
+            </a>
+          </Link>
           <Input
             variant="filled"
             display={["none", "none", "block"]}
@@ -50,9 +53,6 @@ function TopNavbar(props) {
         </HStack>
 
         <HStack>
-          <Button display={["none", "none", "block"]} colorScheme="blue">
-            Write a Post
-          </Button>
           <IconButton
             isRound
             variant="ghost"
@@ -60,29 +60,48 @@ function TopNavbar(props) {
             aria-label="Connect"
             icon={<Icon as={RiSearchLine} w={6} h={6} />}
           />
-          <IconButton
-            isRound
-            variant="ghost"
-            aria-label="Connect"
-            icon={<Icon as={RiChatSmile3Line} w={6} h={6} />}
-          />
-          <IconButton
-            isRound
-            variant="ghost"
-            aria-label="Connect"
-            icon={<Icon as={RiNotification3Line} w={6} h={6} />}
-          />
-
-          <Avatar
-            size="md"
-            name="Dan Abrahmov"
-            src="https://bit.ly/dan-abramov"
-            w={[9]}
-            h={[9]}
-          />
+          {isAuthenticated ? (
+            <Fragment>
+              <Button display={["none", "none", "block"]} colorScheme="blue">
+                Write a Post
+              </Button>
+              <IconButton
+                isRound
+                variant="ghost"
+                aria-label="Connect"
+                icon={<Icon as={RiChatSmile3Line} w={6} h={6} />}
+              />
+              <IconButton
+                isRound
+                variant="ghost"
+                aria-label="Connect"
+                icon={<Icon as={RiNotification3Line} w={6} h={6} />}
+              />
+              {isAuthenticated && <ProfileMenu user={user} />}
+            </Fragment>
+          ) : userLoading ? (
+            <HStack>
+              <Skeleton h="10" w="32" />
+              <SkeletonCircle size="10" />
+              <SkeletonCircle size="10" />
+              <SkeletonCircle size="10" />
+            </HStack>
+          ) : (
+            <Fragment>
+              <Link href="/auth/login" passHref>
+                <Button variant="outline" display={["none", "none", "block"]}>
+                  Login
+                </Button>
+              </Link>
+              <Link href="/auth/register" passHref>
+                <Button colorScheme="linkedin">Create Account</Button>
+              </Link>
+            </Fragment>
+          )}
         </HStack>
       </Box>
-    </Box>
+      <Divider />
+    </Fragment>
   );
 }
 

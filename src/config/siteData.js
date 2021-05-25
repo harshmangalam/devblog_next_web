@@ -1,23 +1,17 @@
-import { RiContactsLine, RiHomeLine, RiMic2Line, RiUserLine } from "react-icons/ri";
-import {MdSlowMotionVideo} from "react-icons/md"
-import {BsTag} from "react-icons/bs"
-export const menuLinks = [
+import {
+  RiContactsLine,
+  RiHomeLine,
+  RiUserLine,
+  RiLoginBoxLine,
+  RiUserAddLine,
+} from "react-icons/ri";
+import { BsTag } from "react-icons/bs";
+
+const menuLinks = [
   {
     name: "Home",
     href: "/",
     icon: RiHomeLine,
-  },
-
-  {
-    name: "Podcasts",
-    href: "/pod",
-    icon: RiMic2Line,
-  },
-
-  {
-    name: "Videos",
-    href: "/videos",
-    icon: MdSlowMotionVideo,
   },
 
   {
@@ -38,3 +32,19 @@ export const menuLinks = [
     icon: RiContactsLine,
   },
 ];
+
+const authRoutes = [
+  {
+    name: "Login",
+    href: "/auth/login",
+    icon: RiLoginBoxLine,
+  },
+
+  {
+    name: "Create Account",
+    href: "/auth/register",
+    icon: RiUserAddLine,
+  },
+];
+
+export { authRoutes, menuLinks };

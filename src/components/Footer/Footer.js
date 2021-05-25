@@ -1,11 +1,9 @@
-import React from 'react';
+import { Center, Icon } from "@chakra-ui/react";
+import { RiHeart2Fill } from "react-icons/ri";
+import React from "react";
 
 function Footer(props) {
-    return (
-        <div>
-            Footer
-        </div>
-    );
+  return <Center>DEV Community</Center>;
 }
 
-export default Footer;  
+export default Footer;

@@ -10,8 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { HiChevronDown } from "react-icons/hi";
 import React, { Fragment, useState } from "react";
-import Link from "next/link"
-function Header(props) {
+import Link from "next/link";
+function PostHeader(props) {
   const [selected, setSelected] = useState("Feed");
 
   return (
@@ -35,16 +35,16 @@ function Header(props) {
         </Box>
         <HStack display={["none", "none", "block"]}>
           {menus.map((menu) => (
-           <Link href={menu.href} passHref>
-            <Button
-              onClick={() => setSelected(menu.name)}
-              isActive={menu.name === selected}
-              variant="ghost"
-              colorScheme="facebook"
-            >
-              {menu.name}
-            </Button>
-           </Link>
+            <Link href={menu.href} passHref>
+              <Button
+                onClick={() => setSelected(menu.name)}
+                isActive={menu.name === selected}
+                variant="ghost"
+                colorScheme="facebook"
+              >
+                {menu.name}
+              </Button>
+            </Link>
           ))}
         </HStack>
       </HStack>
@@ -52,7 +52,7 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default PostHeader;
 
 const menus = [
   { name: "Feed", href: "/" },

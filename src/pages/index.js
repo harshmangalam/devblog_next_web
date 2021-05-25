@@ -1,27 +1,25 @@
 import React from "react";
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import SiteMenus from "../components/LeftSidebar/SiteMenus";
 import TagLists from "../components/LeftSidebar/TagLists";
-import PostsHeader from "../components/Home/Header";
+import PostHeader from "../components/Post/PostHeader";
 import Posts from "../components/Post/Posts";
-import News from "../components/RightSidebar/News";
 
-function Home({ tags }) {
+function Home() {
   return (
-    <Stack direction={["column", "column", "row"]}>
-      <Box w={["full", "full", "64"]} display={["none", "none", "block"]}>
-        <SiteMenus />
-        <TagLists />
-      </Box>
-      <Box flex={1} flexGrow>
-        <PostsHeader />
+    <Box maxW="container.xl" m="auto" py={["2", "2", "10"]}>
+      <Box display="flex" flexDirection={["column", "column", "row"]}>
+        <Box display={["none", "none", "block"]} width={["md"]} marginRight="4">
+          <SiteMenus />
+          <TagLists />
+        </Box>
 
-        <Posts />
+        <Box flexGrow="1" width="full">
+          <PostHeader />
+          <Posts />
+        </Box>
       </Box>
-      <Box display={["none", "none", "block"]} w={["full", "full", "64"]}>
-        <News />
-      </Box>
-    </Stack>
+    </Box>
   );
 }
 
