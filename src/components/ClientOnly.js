@@ -5,7 +5,6 @@ export default function ClientOnly({ children, ...delegated }) {
 
   useEffect(() => {
     setHasMounted(true);
-    console.log("trin..");
   }, []);
 
   if (!hasMounted) {

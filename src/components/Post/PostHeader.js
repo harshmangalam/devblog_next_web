@@ -35,7 +35,7 @@ function PostHeader(props) {
         </Box>
         <HStack display={["none", "none", "block"]}>
           {menus.map((menu) => (
-            <Link href={menu.href} passHref>
+            <Link href={menu.href} passHref key={menu.name}>
               <Button
                 onClick={() => setSelected(menu.name)}
                 isActive={menu.name === selected}

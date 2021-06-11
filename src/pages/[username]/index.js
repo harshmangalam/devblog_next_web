@@ -15,7 +15,7 @@ function index({ user, posts }) {
 
         <Box>
           <Stack direction={["column", "column", "row"]} spacing="4">
-            <VStack borderWidth="1px" p="4" rounded="lg" height="36" w={["full","full","64"]} alignItems="flex-start">
+            <VStack borderWidth="1px" p="4" rounded="lg" h="30%" w={["full","full","64"]} alignItems="flex-start">
               <HStack>
                 <RiArticleLine />
                 <Text>{user._count.posts} posts published</Text>

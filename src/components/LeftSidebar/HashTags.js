@@ -6,7 +6,7 @@ function HashTags({ tags }) {
   return (
     <List>
       {tags.map((tag) => (
-        <Link href={`/t/${tag.slug}`} key={tag.id}>
+        <Link href={`/tags/${tag.slug}`} key={tag.id} passHref>
           <ListItem
             _hover={{
               cursor: "pointer",

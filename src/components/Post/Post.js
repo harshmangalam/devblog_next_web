@@ -30,7 +30,7 @@ function Post({ post }) {
     >
       {post.poster && (
         <Image
-          borderTopRadius={["none"]}
+          borderTopRadius={["none","none","lg"]}
           src={post.poster}
           alt={post.heading}
           title={post.heading}

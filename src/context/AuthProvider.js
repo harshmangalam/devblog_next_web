@@ -3,6 +3,11 @@ import { useContext } from "react";
 import { useEffect, createContext } from "react";
 import useFetchUser from "../hooks/useFetchUser";
 import { useRouter } from "next/router";
+import Axios from "axios";
+
+Axios.defaults.baseURL = "http://localhost:4000";
+
+
 const initialState = {
   userLoading: true,
   user: null,
@@ -59,10 +64,9 @@ export const AuthProvider = ({ children }) => {
       ) {
         return;
       } else {
-        
         dispatch("USER_LOADING", false);
-        dispatch("LOGOUT")
-        router.push("/auth/login")
+        dispatch("LOGOUT");
+        router.push("/auth/login");
       }
     }
   }, [userError]);

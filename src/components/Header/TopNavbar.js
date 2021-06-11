@@ -20,9 +20,11 @@ import { Fragment } from "react";
 import MobileDrawer from "./MobileDrawer";
 import ProfileMenu from "./ProfileMenu";
 import { useAuthState } from "../../context/AuthProvider";
+import { useRouter } from "next/router";
 
 function TopNavbar() {
   const { isAuthenticated, userLoading, user } = useAuthState();
+  const router=  useRouter()
 
   return (
     <Fragment>
@@ -62,7 +64,7 @@ function TopNavbar() {
           />
           {isAuthenticated ? (
             <Fragment>
-              <Button display={["none", "none", "block"]} colorScheme="blue">
+              <Button onClick={()=>router.push("/new")} display={["none", "none", "block"]} colorScheme="blue">
                 Write a Post
               </Button>
               <IconButton

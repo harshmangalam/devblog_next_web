@@ -7,7 +7,6 @@ import {
   Image,
   Tag,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import { BsDot } from "react-icons/bs";
 
@@ -15,11 +14,13 @@ import Link from "next/link";
 import randomColor from "../../utils/randomColor";
 function PostDetail({ post }) {
   return (
-    <VStack alignItems="flex-start">
+    <Box>
       {post.poster && <Image src={post.poster} />}
-      <Heading size="2xl">{post.title}</Heading>
+      <Heading my="4" size="2xl">
+        {post.title}
+      </Heading>
 
-      <HStack>
+      <HStack my="4">
         {post.tags.map((tag) => (
           <Link href={`/tags/${tag.slug}`} passHref>
             <a>
@@ -31,7 +32,7 @@ function PostDetail({ post }) {
         ))}
       </HStack>
 
-      <HStack>
+      <HStack my="4">
         <Avatar src={post.author.avatar} w={8} h={8} />
         <Text>{post.author.name}</Text>
         <Text fontSize="sm">{post.createdAt}</Text>
@@ -39,10 +40,15 @@ function PostDetail({ post }) {
         <Text fontSize="sm">{post.readTime} min read</Text>
       </HStack>
 
-      <Box pt="8" wordBreak="break-all" lineHeight="taller" letterSpacing="wider">
-        {post.content}
+      <Box
+        pt="8"
+        wordBreak="break-all"
+        lineHeight="taller"
+        letterSpacing="wider"
+      >
+        <Box p="4">{post.content}</Box>
       </Box>
-    </VStack>
+    </Box>
   );
 }
 

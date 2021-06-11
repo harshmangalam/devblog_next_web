@@ -7,8 +7,15 @@ import theme from "../theme";
 import client from "../apollo-client";
 import ClientOnly from "../components/ClientOnly";
 import { AuthProvider } from "../context/AuthProvider";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
+  const exclude = ["/new"];
+
+  const isHide = exclude.includes(router.pathname);
+
   return (
     <ChakraProvider theme={theme}>
       <ApolloProvider client={client}>
@@ -20,15 +27,17 @@ function MyApp({ Component, pageProps }) {
               flexDir="column"
               justifyContent="space-between"
             >
-              <Box>
-                <TopNavbar />
-              </Box>
+              {!isHide && (
+                <Box>
+                  <TopNavbar />
+                </Box>
+              )}
 
               <Box flexGrow="1">
                 <Component {...pageProps} />
               </Box>
 
-              <Footer />
+              {!isHide && <Footer />}
             </Box>
           </AuthProvider>
         </ClientOnly>

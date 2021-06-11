@@ -18,8 +18,12 @@ function TagLists() {
   const { isAuthenticated } = useAuthState();
   const { data, loading, error } = useQuery(GetTagsQuery);
 
-  if (error) {
-    return <p>Error</p>;
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isAuthenticated && error) {
+    <p>Error</p>;
   }
   return (
     <Box>

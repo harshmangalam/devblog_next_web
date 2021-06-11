@@ -29,14 +29,15 @@ function login() {
     error,
   } = useLogin();
   return (
-    <Grid column={1} justifyContent="center">
+    <Grid column={1} justifyContent="center" py="6">
       <Box
         borderRadius="lg"
-        borderWidth="1px"
+        borderWidth={["0px","0px","1px"]}
         w={["full", "full", "xl"]}
         p={["4", "4", "10"]}
+        
       >
-        <Heading>Welcom to DEV Community</Heading>
+        <Heading fontSize={["25px","30px","35px"]}>Welcom to DEV Community</Heading>
 
         <Button my="4" leftIcon={<FaGithub />} w="full" size="lg">
           Continue With Github

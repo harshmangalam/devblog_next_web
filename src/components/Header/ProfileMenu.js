@@ -15,7 +15,7 @@ function ProfileMenu({ user }) {
   return (
     <Menu isLazy>
       <MenuButton>
-        <Avatar size="sm" name="Dan Abrahmov" src={user.avatar} />
+        <Avatar size="sm" name={user.name} src={user.avatar} />
       </MenuButton>
       <MenuList>
         <MenuItem onClick={() => router.push(`/${user.username}`)}>

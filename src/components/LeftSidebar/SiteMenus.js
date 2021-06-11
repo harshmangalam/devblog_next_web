@@ -18,7 +18,7 @@ function SiteMenus() {
         </Fragment>
       ) : !isAuthenticated ? (
         authRoutes.map((menu) => (
-          <Link href={menu.href} passHref>
+          <Link href={menu.href} passHref key={menu.name}>
             <ListItem p={3}>
               <ListIcon as={menu.icon} w={6} h={6} />
               {menu.name}
@@ -27,7 +27,7 @@ function SiteMenus() {
         ))
       ) : null}
       {menuLinks.map((menu) => (
-        <Link href={menu.href} passHref>
+        <Link href={menu.href} passHref key={menu.name}>
           <ListItem p={3}>
             <ListIcon as={menu.icon} w={6} h={6} />
             {menu.name}

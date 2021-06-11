@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import client from "../../apollo-client";
 import { gql } from "@apollo/client";
 import {
@@ -9,15 +9,16 @@ import {
   GridItem,
   Heading,
   HStack,
-  List,
-  ListItem,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import TagDetailCard from "../../components/Tag/TagDetailCard";
-import Posts from "../../components/Post/Posts";
 import PostHeader from "../../components/Post/PostHeader";
-function Tag({ tag }) {
+import Post from "../../components/Post/Post";
+function Tag({ tag, posts }) {
+  console.log(posts);
+  console.log(tag);
+  
   return (
     <Box maxW="container.xl" m="auto" py={["2", "2", "4"]}>
       <TagDetailCard tag={tag} />
@@ -53,20 +54,19 @@ function Tag({ tag }) {
 
         <GridItem colSpan={5}>
           <PostHeader />
-          <Posts />
+          <Box>
+            <VStack>
+              {posts.posts.map((post) => (
+                <Post post={post} key={post.id} />
+              ))}
+            </VStack>
+          </Box>
         </GridItem>
 
-        <GridItem
-          display={["none", "none", "block"]}
-          colSpan={2}
-          p="6"
-          
-        >
+        <GridItem display={["none", "none", "block"]} colSpan={2} p="6">
           <Heading size="sm">who to follow</Heading>
           <VStack>
-            <HStack>
-              
-            </HStack>
+            <HStack></HStack>
           </VStack>
         </GridItem>
       </Grid>
@@ -93,11 +93,54 @@ const GET_TAG_QUERY = gql`
   }
 `;
 
+const GET_POSTS_BY_TAG_QUERY = gql`
+  query Posts($slug: String!) {
+    posts(
+      filter: { tags: { some: { name: $slug } } }
+      include: [author, tags]
+    ) {
+      posts {
+        id
+        poster
+        createdAt
+        slug
+        title
+
+        publishedAt
+        tags {
+          id
+          name
+          slug
+        }
+        author {
+          name
+          username
+          avatar
+        }
+
+        _count {
+          hearts
+          unicorns
+          bookmarks
+        }
+        readTime
+      }
+    }
+  }
+`;
+
 export async function getServerSideProps(ctx) {
   try {
     const slug = ctx.query.slug;
-    const { data } = await client.query({
+    const { data: tagData } = await client.query({
       query: GET_TAG_QUERY,
+      variables: {
+        slug,
+      },
+    });
+
+    const { data: postsData } = await client.query({
+      query: GET_POSTS_BY_TAG_QUERY,
       variables: {
         slug,
       },
@@ -105,11 +148,15 @@ export async function getServerSideProps(ctx) {
 
     return {
       props: {
-        tag: data.tag,
+        tag: tagData.tag,
+        posts: postsData.posts,
       },
     };
   } catch (error) {
     console.log(error);
+    return {
+      props: {},
+    };
   }
 }
 
